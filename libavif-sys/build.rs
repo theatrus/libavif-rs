@@ -19,6 +19,7 @@ fn main() {
         .map(|v| env::split_paths(&v).collect())
         .unwrap_or_default();
 
+    avif.define("AVIF_LIBYUV", "LOCAL");
     avif.define("BUILD_SHARED_LIBS", "0");
     // Required for clang 12 on macOS, and likely all future compilers libavif hasn't been tweaked for yet
     avif.define("AVIF_ENABLE_WERROR", "0");

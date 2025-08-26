@@ -1,6 +1,6 @@
 [package]
 name = "libavif-sys"
-version = "0.17.0+libavif.1.0.4"
+version = "0.17.0+libavif.1.2.1"
 authors = ["Charles Samuels <ks@ks.ax>", "Paolo Barbolini <paolo@paolo565.org>"]
 edition = "2021"
 rust-version = "1.63"
@@ -15,7 +15,7 @@ readme = "README.md"
 exclude = ["/libavif/tests/", "/libavif/ext/", "/libavif/examples/", ".github"]
 
 [features]
-default = ["codec-dav1d", "codec-rav1e"]
+default = ["codec-aom"]
 codec-rav1e = ["rav1e"]
 codec-dav1d = ["libdav1d-sys"]
 codec-aom = ["libaom-sys"]
