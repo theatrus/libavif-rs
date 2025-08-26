@@ -32,7 +32,7 @@ fn main() {
     {
         let include =
             env::var_os("DEP_AOM_INCLUDE").expect("libaom-sys should have set include path");
-        avif.define("AVIF_CODEC_AOM", "1");
+        avif.define("AVIF_CODEC_AOM", "LOCAL");
         avif.define("AOM_INCLUDE_DIR", include);
 
         let pc_path =
