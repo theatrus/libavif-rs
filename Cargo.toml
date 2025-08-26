@@ -13,13 +13,13 @@ license="BSD-2-Clause"
 readme = "README.md"
 
 [dependencies]
-libavif-sys = { version = "0.17.0", path = "libavif-sys", default-features = false }
+libavif-sys = { version = "0.17.0", path = "libavif-sys", features = ["codec-aom"] }
 
 [dev-dependencies]
 image = { version = "0.25", default-features = false, features = ["jpeg","png"] }
 
 [features]
-default = ["codec-dav1d", "codec-rav1e"]
+default = ["codec-aom"]
 codec-rav1e = ["libavif-sys/codec-rav1e"]
 codec-dav1d = ["libavif-sys/codec-dav1d"]
 codec-aom = ["libavif-sys/codec-aom"]
