@@ -19,6 +19,7 @@ fn main() {
         .map(|v| env::split_paths(&v).collect())
         .unwrap_or_default();
 
+    avif.define("AVIF_LIBYUV", "LOCAL");
     avif.define("BUILD_SHARED_LIBS", "0");
     // Required for clang 12 on macOS, and likely all future compilers libavif hasn't been tweaked for yet
     avif.define("AVIF_ENABLE_WERROR", "0");
@@ -31,7 +32,7 @@ fn main() {
     {
         let include =
             env::var_os("DEP_AOM_INCLUDE").expect("libaom-sys should have set include path");
-        avif.define("AVIF_CODEC_AOM", "1");
+        avif.define("AVIF_CODEC_AOM", "LOCAL");
         avif.define("AOM_INCLUDE_DIR", include);
 
         let pc_path =
@@ -49,7 +50,7 @@ fn main() {
         fs::copy(crate_dir.join("rav1e.h"), rav1e_include_dir.join("rav1e.h"))
             .expect("copy rav1e.h");
 
-        avif.define("AVIF_CODEC_RAV1E", "1")
+        avif.define("AVIF_CODEC_RAV1E", "LOCAL")
             .define("AVIF_CODEC_LIBRARIES", "rav1e")
             // required by `emcmake cmake`
             .define("RAV1E_INCLUDE_DIR", rav1e_include_dir)
@@ -60,7 +61,7 @@ fn main() {
     {
         let include =
             env::var_os("DEP_DAV1D_INCLUDE").expect("libdav1d-sys should have set pkgconfig path");
-        avif.define("AVIF_CODEC_DAV1D", "1");
+        avif.define("AVIF_CODEC_DAV1D", "LOCAL");
         avif.define("DAV1D_INCLUDE_DIR", include);
 
         if let Some(pc_path) = env::var_os("DEP_DAV1D_PKGCONFIG") {
@@ -86,7 +87,7 @@ fn main() {
         "Debug"
     })
     .configure_arg("-DCMAKE_INSTALL_LIBDIR=lib")
-    .configure_arg("-DAVIF_LIBYUV=OFF");
+    .configure_arg("-DAVIF_LIBYUV=LOCAL");
     if env::var("LIBAVIF_CROSS_WIN32").is_ok() {
         avif.configure_arg("-T host=x64").configure_arg("-A Win32");
     }
