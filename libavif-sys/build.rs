@@ -32,12 +32,23 @@ fn main() {
     {
         let include =
             env::var_os("DEP_AOM_INCLUDE").expect("libaom-sys should have set include path");
-        avif.define("AVIF_CODEC_AOM", "LOCAL");
+        // SYSTEM makes libavif link the libaom built by libaom-sys instead of
+        // fetching and building a second copy of aom itself.
+        avif.define("AVIF_CODEC_AOM", "SYSTEM");
         avif.define("AOM_INCLUDE_DIR", include);
 
         let pc_path =
             env::var_os("DEP_AOM_PKGCONFIG").expect("libaom-sys should have set pkgconfig path");
-        avif.define("AOM_LIBRARY", pc_path.clone());
+        let lib_dir = Path::new(&pc_path)
+            .parent()
+            .expect("pkgconfig dir should live under lib")
+            .to_path_buf();
+        let lib_name = if env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
+            "aom.lib"
+        } else {
+            "libaom.a"
+        };
+        avif.define("AOM_LIBRARY", lib_dir.join(lib_name));
         pc_paths.insert(0, pc_path.into());
     }
 

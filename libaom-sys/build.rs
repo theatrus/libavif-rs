@@ -27,6 +27,7 @@ fn main() {
             "Debug"
         })
         .define("ENABLE_DOCS", "0")
+        .define("ENABLE_APPS", "0")
         .define("ENABLE_EXAMPLES", "0")
         .define("ENABLE_TESTDATA", "0")
         .define("ENABLE_TESTS", "0")
